@@ -4,14 +4,14 @@ interface ListGroupProps<T> {
   items: T[];
   heading: string;
   onSelectItem: (item: T) => void;
-  getItemText: (item: T) => string;
+  renderItem: (item: T) => React.ReactNode;
 }
 
 function ListGroup<T>({
   items,
   heading,
   onSelectItem,
-  getItemText,
+  renderItem,
 }: ListGroupProps<T>) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -28,7 +28,7 @@ function ListGroup<T>({
             onSelectItem(item);
           }}
         >
-          <Text>{getItemText(item)}</Text>
+          {renderItem(item)}
         </TouchableOpacity>
       ))}
     </View>

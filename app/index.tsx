@@ -1,5 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, Pressable } from "react-native";
+import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { Goal } from "../models/goalModel";
 import goalService from "../services/goalService";
 import ListGroup from "@/components/ListGroup";
@@ -14,6 +16,8 @@ const Index = () => {
     endDate: new Date(),
     subGoals: [],
   });
+
+  const router = useRouter();
 
   useEffect(() => {
     goalService.getAllGoals().then(setGoals);
@@ -61,11 +65,18 @@ const Index = () => {
   };
 
   const handleSelectGoal = (goal: Goal) => {
-    console.log(goal);
+    router.push({
+      pathname: "/goalPage",
+      params: { goal: JSON.stringify(goal) },
+    });
   };
 
-  const handleGetGoalTitle = (goal: Goal) => {
-    return goal.title;
+  const handleRenderGoal = (goal: Goal) => {
+    return (
+      <View>
+        <Text>{goal.title}</Text>
+      </View>
+    );
   };
 
   return (
@@ -98,7 +109,7 @@ const Index = () => {
         items={goals}
         heading="Goals"
         onSelectItem={handleSelectGoal}
-        getItemText={handleGetGoalTitle}
+        renderItem={handleRenderGoal}
       />
     </View>
   );

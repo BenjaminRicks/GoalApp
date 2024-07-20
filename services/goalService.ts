@@ -1,4 +1,3 @@
-// services/goalService.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Goal } from "../models/goalModel";
 
